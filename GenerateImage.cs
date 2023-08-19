@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Http;
 using System.Drawing;
 using System.Text;
 using System.Text.Json;
@@ -7,16 +8,12 @@ namespace OutputCacheDallESample;
 
 public static class GenerateImage
 {
-
-    public static string apiUrl = "https://<Your_Azure_OpenAI_Name>.openai.azure.com/openai/images/generations:submit?api-version=2023-06-01-preview";
     public static HttpClient client = new HttpClient();
-    // put secret as environment variable
-    public static string apiKey = "your_Azure_OpenAI_API_Key";
 
-    public static async Task generateImage(HttpContext context)
+    public static async Task generateImage(HttpContext context, string _prompt, IConfiguration _config)
     {
         // Add custom headers
-        client.DefaultRequestHeaders.Add("api-key", apiKey);
+        client.DefaultRequestHeaders.Add("api-key", _config["apiKey"]);
 
         try
         {
@@ -24,14 +21,14 @@ public static class GenerateImage
             var requestBody = new
             {
                 // user defined prompt
-                prompt = "A cute monster in cartoon style",
+                prompt = _prompt,
                 size = "1024x1024",
                 n = 1
             };
 
             string jsonPayload = JsonSerializer.Serialize(requestBody);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+            HttpResponseMessage response = await client.PostAsync(_config["apiUrl"], content);
 
             if (response.IsSuccessStatusCode)
             {

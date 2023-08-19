@@ -470,11 +470,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+      "projectUniqueName": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
       "projectName": "OutputCacheDallESample",
-      "projectPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+      "projectPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
       "packagesPath": "C:\\Users\\cawa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample\\obj\\",
+      "outputPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\cawa\\AppData\\Roaming\\NuGet\\NuGet.Config",

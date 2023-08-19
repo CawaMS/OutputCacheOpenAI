@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U7wGR4mdAVWmWXRZcwtn55kl8ZIKsqWajSSwY/iqh/NJ5nOliE+0eF8YmFGNshbkO3SVCqxrY0uQFw1BqBnGCw==",
+  "dgSpecHash": "36RhnDRZH61qNZyaSxunF0tr5AGwaYfGLKLUHh+7t9hesvlCc8R6+AxzVPeg/RX0GHF2EpKZNMQaxWYk1E9BTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+  "projectFilePath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.caching.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
     "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\8.0.0-preview.7.23375.9\\microsoft.extensions.caching.stackexchangeredis.8.0.0-preview.7.23375.9.nupkg.sha512",
