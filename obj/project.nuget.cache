@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "36RhnDRZH61qNZyaSxunF0tr5AGwaYfGLKLUHh+7t9hesvlCc8R6+AxzVPeg/RX0GHF2EpKZNMQaxWYk1E9BTg==",
+  "dgSpecHash": "ocI7eSU5csUEFhVyoYjCiP+Q1x16sJvSRXhl0ubru/HW9iJYvF3qGyqq1/9KFxeK0NjEipyJUKPBzenWC3P31g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+  "projectFilePath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.caching.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\8.0.0-preview.7.23375.9\\microsoft.extensions.caching.stackexchangeredis.8.0.0-preview.7.23375.9.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.dependencyinjection.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.logging.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.options\\8.0.0-preview.7.23375.6\\microsoft.extensions.options.8.0.0-preview.7.23375.6.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0-preview.7.23375.6\\microsoft.extensions.primitives.8.0.0-preview.7.23375.6.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.2\\pipelines.sockets.unofficial.2.2.2.nupkg.sha512",
-    "C:\\Users\\cawa\\.nuget\\packages\\stackexchange.redis\\2.6.90\\stackexchange.redis.2.6.90.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.aspnetcore.outputcaching.stackexchangeredis\\8.0.0-rc.2.23480.2\\microsoft.aspnetcore.outputcaching.stackexchangeredis.8.0.0-rc.2.23480.2.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0-rc.2.23479.6\\microsoft.extensions.dependencyinjection.abstractions.8.0.0-rc.2.23479.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0-rc.2.23479.6\\microsoft.extensions.logging.abstractions.8.0.0-rc.2.23479.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.options\\8.0.0-rc.2.23479.6\\microsoft.extensions.options.8.0.0-rc.2.23479.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0-rc.2.23479.6\\microsoft.extensions.primitives.8.0.0-rc.2.23479.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\stackexchange.redis\\2.6.122\\stackexchange.redis.2.6.122.nupkg.sha512",
     "C:\\Users\\cawa\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512"
   ],
   "logs": []

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj": {}
+    "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj": {
+    "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+        "projectUniqueName": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample.csproj",
         "projectName": "OutputCacheDallESample",
-        "projectPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+        "projectPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\OutputCacheDallESample.csproj",
         "packagesPath": "C:\\Users\\cawa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\obj\\",
+        "outputPath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample-Git\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\cawa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -34,18 +34,19 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "default"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+            "Microsoft.AspNetCore.OutputCaching.StackExchangeRedis": {
               "target": "Package",
-              "version": "[8.0.0-preview.7.23375.9, )"
+              "version": "[8.0.0-rc.2.23480.2, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.19.5, )"
             }
           },
           "imports": [
@@ -67,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.7.23376.3\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rtm.23513.4/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
