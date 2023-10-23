@@ -7,6 +7,9 @@ param containerRegistryName string
 param containerAppsEnvironmentName string
 param applicationInsightsName string
 param exists bool
+param openAiSku object = {
+  name:'S0'
+}
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -86,15 +89,15 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'apiKey'
-              value: 'your_openai_apikey'
+              value: cognitiveAccount.listKeys().key1
             }
             {
               name: 'apiUrl'
-              value: 'your_openai_endpoint'
+              value: cognitiveAccount.properties.endpoint
             }
             {
               name: 'RedisCacheConnection'
-              value: 'your_cache_connectionstring'
+              value: '${redisCache.properties.hostName}:6380,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
           ]
           resources: {
@@ -108,6 +111,35 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
         maxReplicas: 10
       }
     }
+  }
+}
+
+//azure open ai resource
+resource cognitiveAccount 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+  name: '${name}-csaccount'
+  location: location
+  tags: tags
+  kind: 'OpenAI'
+  properties: {
+    customSubDomainName: '${name}-csaccount'
+    publicNetworkAccess: 'Enabled'
+  }
+  sku: openAiSku
+}
+
+//azure cache for redis resource
+resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
+  location:location
+  name: '${name}-rediscache'
+  properties:{
+    sku:{
+      capacity:1
+      family:'C'
+      name: 'Standard'
+    }
+    enableNonSslPort:false
+    redisVersion:'6'
+    publicNetworkAccess:'Disabled'
   }
 }
 
