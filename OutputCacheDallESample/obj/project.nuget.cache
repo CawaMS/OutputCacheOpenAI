@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "1m08PEed4yti0XUyPC59v1w3j/S0MEhWyIcMca2FJDAnXu51x4uYrR6L8r+VgTtj7gaQza/XfCE5fkdhlus+8g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\cawa\\source\\repos\\OutputCacheDallESample\\OutputCacheDallESample\\OutputCacheDallESample.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.caching.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\8.0.0-preview.7.23375.9\\microsoft.extensions.caching.stackexchangeredis.8.0.0-preview.7.23375.9.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.dependencyinjection.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0-preview.7.23375.6\\microsoft.extensions.logging.abstractions.8.0.0-preview.7.23375.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.options\\8.0.0-preview.7.23375.6\\microsoft.extensions.options.8.0.0-preview.7.23375.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0-preview.7.23375.6\\microsoft.extensions.primitives.8.0.0-preview.7.23375.6.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.2\\pipelines.sockets.unofficial.2.2.2.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\stackexchange.redis\\2.6.90\\stackexchange.redis.2.6.90.nupkg.sha512",
+    "C:\\Users\\cawa\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
