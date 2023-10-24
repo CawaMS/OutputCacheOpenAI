@@ -93,7 +93,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'apiUrl'
-              value: cognitiveAccount.properties.endpoint
+              value: '${cognitiveAccount.properties.endpoint}openai/images/generations:submit?api-version=2023-06-01-preview'
             }
             {
               name: 'RedisCacheConnection'
@@ -139,7 +139,7 @@ resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
     }
     enableNonSslPort:false
     redisVersion:'6'
-    publicNetworkAccess:'Disabled'
+    publicNetworkAccess:'Enabled'
   }
 }
 

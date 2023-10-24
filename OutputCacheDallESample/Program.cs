@@ -16,18 +16,18 @@ var app = builder.Build();
 app.MapGet("/", async (HttpContext context) => { await context.Response.WriteAsync("<h1>Welcome to OpenAI Art Gallery</h1>"); });
 
 app.MapGet("/nocache/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
-    { await GenerateImage.generateImage(context, prompt, config); 
+    { await GenerateImage.GenerateImageAsync(context, prompt, config); 
     });
 app.MapGet("/cached/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
-    { await GenerateImage.generateImage(context, prompt, config); 
+    { await GenerateImage.GenerateImageAsync(context, prompt, config); 
     }).CacheOutput();
 
 app.MapGet("/cachedByAnnotation/{prompt}", [OutputCache(Duration = 15)] async (HttpContext context, string prompt, IConfiguration config) => 
-    { await GenerateImage.generateImage(context, prompt, config); 
+    { await GenerateImage.GenerateImageAsync(context, prompt, config); 
     });
 
 app.MapGet("/cached/Gardens/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
-    { await GenerateImage.generateImage(context, prompt, config); 
+    { await GenerateImage.GenerateImageAsync(context, prompt, config); 
     }).CacheOutput(x => x.Tag("Gardens"));
 
 app.MapPost("/purge/{tag}", async (IOutputCacheStore cache, string tag) =>

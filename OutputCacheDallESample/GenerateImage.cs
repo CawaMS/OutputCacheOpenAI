@@ -10,7 +10,7 @@ public static class GenerateImage
 {
     public static HttpClient client = new HttpClient();
 
-    public static async Task generateImage(HttpContext context, string _prompt, IConfiguration _config)
+    public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config)
     {
         // Add custom headers
         client.DefaultRequestHeaders.Add("api-key", _config["apiKey"]);
