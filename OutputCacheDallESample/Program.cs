@@ -4,12 +4,13 @@ using OutputCacheDallESample;
 var builder = WebApplication.CreateBuilder(args);
 
 // add services
+builder.Services.AddStackExchangeRedisOutputCache(options => {
+    options.Configuration = builder.Configuration["RedisCacheConnection"];
+});
 builder.Services.AddOutputCache(options => {
     // optional: named output-cache profiles
 });
-builder.Services.AddStackExchangeRedisOutputCache(options => { 
-    options.Configuration = builder.Configuration["RedisCacheConnection"];
-});
+
 
 var app = builder.Build();
 
