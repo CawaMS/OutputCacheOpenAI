@@ -3,15 +3,22 @@ using Microsoft.AspNetCore.Http;
 using System.Drawing;
 using System.Text;
 using System.Text.Json;
+using Redis.OM;
+using Redis.OM.Vectorizers;
 
 namespace OutputCacheDallESample; 
 
 public static class GenerateImage
 {
     public static HttpClient client = new HttpClient();
+    public const int AOAIDeploymentDimension = 10;
 
-    public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config)
+    public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config, RedisConnectionProvider _provider )
     {
+        //add semantic cache
+        var cache = _provider.AzureOpenAISemanticCache(_config["apiKey"], _config["AOAIResourceName"], _config["AOAIEmbeddingDeploymentName"],AOAIDeploymentDimension);
+        
+
         // Add custom headers
         client.DefaultRequestHeaders.Add("api-key", _config["apiKey"]);
 
