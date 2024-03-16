@@ -1,7 +1,6 @@
 param name string
 param location string = resourceGroup().location
 param tags object = {}
-
 param identityName string
 param containerRegistryName string
 param containerAppsEnvironmentName string
@@ -10,6 +9,8 @@ param exists bool
 param openAiSku object = {
   name:'S0'
 }
+
+var embeddingModelName='text-embedding-ada-002'
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -92,6 +93,14 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
               value: cognitiveAccount.listKeys().key1
             }
             {
+              name: 'AOAIResourceName'
+              value: cognitiveAccount.name
+            }
+            {
+              name: 'AOAIEmbeddingDeploymentName'
+              value: textembeddingdeployment.name
+            }
+            {
               name: 'apiUrl'
               value: '${cognitiveAccount.properties.endpoint}openai/images/generations:submit?api-version=2023-06-01-preview'
             }
@@ -125,6 +134,22 @@ resource cognitiveAccount 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
     publicNetworkAccess: 'Enabled'
   }
   sku: openAiSku
+}
+
+//ada text embedding service
+resource textembeddingdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  name:'${name}-textembedding'
+  parent: cognitiveAccount
+  properties:{
+    model: {
+      format: 'OpenAI'
+      name: embeddingModelName
+      version: '2'
+    }
+  }
+  sku: {
+    name: 'Standard'
+  }
 }
 
 //azure cache for redis resource
