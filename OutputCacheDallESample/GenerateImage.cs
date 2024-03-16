@@ -15,64 +15,77 @@ public static class GenerateImage
 
     public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config, RedisConnectionProvider _provider )
     {
+        string imageURL;
+
         //add semantic cache
         var cache = _provider.AzureOpenAISemanticCache(_config["apiKey"], _config["AOAIResourceName"], _config["AOAIEmbeddingDeploymentName"],AOAIDeploymentDimension);
-        
-
-        // Add custom headers
-        client.DefaultRequestHeaders.Add("api-key", _config["apiKey"]);
-
-        try
+        List<SemanticCacheResponse> res = cache.GetSimilar(_prompt).ToList();
+        if (res.Any())
         {
-            // Create a JSON payload
-            var requestBody = new
-            {
-                // user defined prompt
-                prompt = _prompt,
-                size = "1024x1024",
-                n = 1
-            };
+            imageURL = res.First();
+            await context.Response.WriteAsync($"<img src=\"{imageURL}\"/>");
+        }
+        else
+        {
+            // Add custom headers
+            client.DefaultRequestHeaders.Add("api-key", _config["apiKey"]);
 
-            string jsonPayload = JsonSerializer.Serialize(requestBody);
-            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync(_config["apiUrl"], content);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                context.Response.StatusCode = 200;
-                context.Response.ContentType = "text/html";
-                var status = "";
-                var location = "";
-                foreach (var h in response.Headers)
+                // Create a JSON payload
+                var requestBody = new
                 {
-                    if (h.Key == "operation-location")
+                    // user defined prompt
+                    prompt = _prompt,
+                    size = "1024x1024",
+                    n = 1
+                };
+
+                string jsonPayload = JsonSerializer.Serialize(requestBody);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(_config["apiUrl"], content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    context.Response.StatusCode = 200;
+                    context.Response.ContentType = "text/html";
+                    var status = "";
+                    var location = "";
+                    foreach (var h in response.Headers)
                     {
-                        location = h.Value.First();
+                        if (h.Key == "operation-location")
+                        {
+                            location = h.Value.First();
+                        }
                     }
-                }
 
-                // retrieve image
-                HttpResponseMessage imageResponse = await client.GetAsync(location);
-                string imageResponseBody = await imageResponse.Content.ReadAsStringAsync();
-                while (getStatus(imageResponseBody) != "succeeded")
-                {
-                    Thread.Sleep(1000);
-                    imageResponse = await client.GetAsync(location);
-                    imageResponseBody = await imageResponse.Content.ReadAsStringAsync();
+                    // retrieve image
+                    HttpResponseMessage imageResponse = await client.GetAsync(location);
+                    string imageResponseBody = await imageResponse.Content.ReadAsStringAsync();
+                    while (getStatus(imageResponseBody) != "succeeded")
+                    {
+                        Thread.Sleep(1000);
+                        imageResponse = await client.GetAsync(location);
+                        imageResponseBody = await imageResponse.Content.ReadAsStringAsync();
+                    }
+                    imageURL = retrieveImageURL(imageResponseBody);
+                    await cache.StoreAsync(_prompt, imageURL);
+                    await context.Response.WriteAsync($"<img src=\"{imageURL}\"/>");
                 }
-                string imageURL = retrieveImageURL(imageResponseBody);
-                await context.Response.WriteAsync($"<img src=\"{imageURL}\"/>");
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
+
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+
+        
         
     }
 

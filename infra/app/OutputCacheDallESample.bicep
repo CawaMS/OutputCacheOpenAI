@@ -10,7 +10,8 @@ param openAiSku object = {
   name:'S0'
 }
 
-var embeddingModelName='text-embedding-ada-002'
+var embeddingModelName = 'text-embedding-ada-002'
+var redisPort = 10000
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -106,7 +107,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'RedisCacheConnection'
-              value: '${redisCache.properties.hostName}:6380,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
+              value: '${redisCache.properties.hostName}:10000,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
           ]
           resources: {
@@ -153,18 +154,29 @@ resource textembeddingdeployment 'Microsoft.CognitiveServices/accounts/deploymen
 }
 
 //azure cache for redis resource
-resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
+resource redisCache 'Microsoft.Cache/redisEnterprise@2024-02-01' = {
   location:location
   name: '${name}-rediscache'
+  sku:{
+    capacity:2
+    name: 'Enterprise_E10'
+  }
+}
+resource redisdatabase 'Microsoft.Cache/redisEnterprise/databases@2024-02-01' = {
+  name: 'default'
+  parent: redisCache
   properties:{
-    sku:{
-      capacity:1
-      family:'C'
-      name: 'Standard'
-    }
-    enableNonSslPort:false
-    redisVersion:'6'
-    publicNetworkAccess:'Enabled'
+    evictionPolicy:'NoEviction'
+    clusteringPolicy:'EnterpriseCluster'
+    modules:[
+      {
+        name: 'RediSearch'
+      }
+      {
+        name:'RedisJSON'
+      }
+    ]
+    port: redisPort
   }
 }
 
