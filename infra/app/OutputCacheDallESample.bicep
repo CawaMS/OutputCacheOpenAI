@@ -11,6 +11,7 @@ param openAiSku object = {
 }
 
 var embeddingModelName = 'text-embedding-ada-002'
+var embeddingDeploymentCapacity = 30
 var redisPort = 10000
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
@@ -53,7 +54,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: name
   location: location
   tags: union(tags, {'azd-service-name':  'OutputCacheDallESample' })
-  dependsOn: [ acrPullRole ]
+  dependsOn: [ acrPullRole]
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: { '${identity.id}': {} }
@@ -107,7 +108,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'RedisCacheConnection'
-              value: '${redisCache.properties.hostName}:10000,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
+              value: '${redisCache.properties.hostName}:10000,password=${redisdatabase.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
           ]
           resources: {
@@ -150,6 +151,7 @@ resource textembeddingdeployment 'Microsoft.CognitiveServices/accounts/deploymen
   }
   sku: {
     name: 'Standard'
+    capacity: embeddingDeploymentCapacity
   }
 }
 
