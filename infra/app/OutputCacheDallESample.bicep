@@ -104,7 +104,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'apiUrl'
-              value: '${cognitiveAccount.properties.endpoint}openai/images/generations:submit?api-version=2023-06-01-preview'
+              value: '${cognitiveAccount.properties.endpoint}openai/deployments/Dalle3/images/generations?api-version=2024-02-01'
             }
             {
               name: 'RedisCacheConnection'

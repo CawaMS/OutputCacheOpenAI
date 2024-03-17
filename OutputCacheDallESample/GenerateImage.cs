@@ -12,12 +12,14 @@ public static class GenerateImage
 {
     public static HttpClient client = new HttpClient();
     public const int AOAIDeploymentDimension = 10;
+    public static RedisConnectionProvider _provider;
 
-    public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config, RedisConnectionProvider _provider )
+    public static async Task GenerateImageAsync(HttpContext context, string _prompt, IConfiguration _config)
     {
         string imageURL;
 
         //add semantic cache
+        _provider = new RedisConnectionProvider(_config["RedisCacheConnection"]);
         var cache = _provider.AzureOpenAISemanticCache(_config["apiKey"], _config["AOAIResourceName"], _config["AOAIEmbeddingDeploymentName"],AOAIDeploymentDimension);
         List<SemanticCacheResponse> res = cache.GetSimilar(_prompt).ToList();
         if (res.Any())
