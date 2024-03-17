@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.OutputCaching;
 using OutputCacheDallESample;
+using Redis.OM;
+using Redis.OM.Vectorizers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddOutputCache(options => {
     // optional: named output-cache profiles
 });
 
+//builder.Services.AddSingleton(x => new RedisConnectionProvider(builder.Configuration["RedisCacheConnection"]));
 
 var app = builder.Build();
 

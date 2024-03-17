@@ -1,7 +1,6 @@
 param name string
 param location string = resourceGroup().location
 param tags object = {}
-
 param identityName string
 param containerRegistryName string
 param containerAppsEnvironmentName string
@@ -10,6 +9,10 @@ param exists bool
 param openAiSku object = {
   name:'S0'
 }
+
+var embeddingModelName = 'text-embedding-ada-002'
+var embeddingDeploymentCapacity = 30
+var redisPort = 10000
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -51,7 +54,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: name
   location: location
   tags: union(tags, {'azd-service-name':  'OutputCacheDallESample' })
-  dependsOn: [ acrPullRole ]
+  dependsOn: [ acrPullRole]
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: { '${identity.id}': {} }
@@ -92,12 +95,20 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
               value: cognitiveAccount.listKeys().key1
             }
             {
+              name: 'AOAIResourceName'
+              value: cognitiveAccount.name
+            }
+            {
+              name: 'AOAIEmbeddingDeploymentName'
+              value: textembeddingdeployment.name
+            }
+            {
               name: 'apiUrl'
-              value: '${cognitiveAccount.properties.endpoint}openai/images/generations:submit?api-version=2023-06-01-preview'
+              value: '${cognitiveAccount.properties.endpoint}openai/deployments/Dalle3/images/generations?api-version=2024-02-01'
             }
             {
               name: 'RedisCacheConnection'
-              value: '${redisCache.properties.hostName}:6380,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
+              value: '${redisCache.properties.hostName}:10000,password=${redisdatabase.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
           ]
           resources: {
@@ -127,19 +138,47 @@ resource cognitiveAccount 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   sku: openAiSku
 }
 
+//ada text embedding service
+resource textembeddingdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  name:'${name}-textembedding'
+  parent: cognitiveAccount
+  properties:{
+    model: {
+      format: 'OpenAI'
+      name: embeddingModelName
+      version: '2'
+    }
+  }
+  sku: {
+    name: 'Standard'
+    capacity: embeddingDeploymentCapacity
+  }
+}
+
 //azure cache for redis resource
-resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
+resource redisCache 'Microsoft.Cache/redisEnterprise@2024-02-01' = {
   location:location
   name: '${name}-rediscache'
+  sku:{
+    capacity:2
+    name: 'Enterprise_E10'
+  }
+}
+resource redisdatabase 'Microsoft.Cache/redisEnterprise/databases@2024-02-01' = {
+  name: 'default'
+  parent: redisCache
   properties:{
-    sku:{
-      capacity:1
-      family:'C'
-      name: 'Standard'
-    }
-    enableNonSslPort:false
-    redisVersion:'6'
-    publicNetworkAccess:'Enabled'
+    evictionPolicy:'NoEviction'
+    clusteringPolicy:'EnterpriseCluster'
+    modules:[
+      {
+        name: 'RediSearch'
+      }
+      {
+        name:'RedisJSON'
+      }
+    ]
+    port: redisPort
   }
 }
 
