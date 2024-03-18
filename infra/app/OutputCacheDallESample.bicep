@@ -95,6 +95,10 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
               value: cognitiveAccount.listKeys().key1
             }
             {
+              name: 'AZURE_OPENAI_ENDPOINT'
+              value: cognitiveAccount.properties.endpoint
+            }
+            {
               name: 'AOAIResourceName'
               value: cognitiveAccount.name
             }
