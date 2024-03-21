@@ -17,7 +17,7 @@ namespace OutputCacheDallESample
             string key = _config["apiKey"];
 
             _provider = new RedisConnectionProvider(_config["SemanticCacheAzureProvider"]);
-            var cache = _provider.AzureOpenAISemanticCache(_config["apiKey"], _config["AOAIResourceName"], _config["AOAIEmbeddingDeploymentName"], 30);
+            var cache = _provider.AzureOpenAISemanticCache(_config["apiKey"], _config["AOAIResourceName"], _config["AOAIEmbeddingDeploymentName"], 1536);
 
             if (cache.GetSimilar(_prompt).Length > 0)
             {
