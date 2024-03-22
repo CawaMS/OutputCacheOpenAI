@@ -114,6 +114,10 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
               name: 'RedisCacheConnection'
               value: '${redisCache.properties.hostName}:10000,password=${redisdatabase.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
+            {
+              name:'SemanticCacheAzureProvider'
+              value: 'rediss://:${redisdatabase.listKeys().primaryKey}@${redisCache.properties.hostName}:10000'
+            }
           ]
           resources: {
             cpu: json('1.0')

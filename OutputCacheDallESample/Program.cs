@@ -13,14 +13,18 @@ builder.Services.AddOutputCache(options => {
     // optional: named output-cache profiles
 });
 
-//builder.Services.AddSingleton(x => new RedisConnectionProvider(builder.Configuration["RedisCacheConnection"]));
-
 var app = builder.Build();
 
 app.MapGet("/", async (HttpContext context) => { await context.Response.WriteAsync("<h1>Welcome to OpenAI Art Gallery</h1>"); });
 
 app.MapGet("/nocache/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
-    { await GenerateImageSDK.GenerateImageSDKAsync(context, prompt, config); 
+    { 
+        await GenerateImageSDK.GenerateImageSDKAsync(context, prompt, config); 
+    });
+
+app.MapGet("/semanticcache/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
+    { 
+        await GenerateImageSC.GenerateImageSCAsync(context, prompt, config);
     });
 
 app.MapGet("/cached/{prompt}", async (HttpContext context, string prompt, IConfiguration config) => 
