@@ -14,7 +14,7 @@ Here are an example outputs:
 
 **Figure 1**: /cached/ endpoint caches web response rendered output
 
-![Output Cache: a purple robot in the cloud](./images/ExampleOutput.png)
+![Output Cache: a purple robot in the cloud](./images/oc_a-purple-robot-in-the-sky.png)
 
 **Figure 2**: /semanticcache/ endpoint for "a french garden in monet style"
 
