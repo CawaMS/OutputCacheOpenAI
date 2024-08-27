@@ -32,6 +32,10 @@ Prerequisites:
 - Docker. [Get docker](https://docs.docker.com/get-docker/)
 - Azure Developer CLI. [Install](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-windows)
 
+`
+NOTE: deploy this demo in the East US region to ensure both zonal support and Dall-E model available. DALL-E model for picture generation is only supported among East US, Australia East, or Sweden Central. Azure Cache for Redis needs a region with zonal support to work.
+`
+
 1. Open a command prompt
 2. Change directory to the project folder where azure.yaml file is located
 4. Make sure docker is running
