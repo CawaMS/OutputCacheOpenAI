@@ -5,10 +5,41 @@ This repository contains sample code for an AI image generation web application.
 * It allows responses from the /cached/ endpoint to be saved in Azure Cache for Redis through the [IOutputCache() abstraction](https://learn.microsoft.com/aspnet/core/performance/caching/output?preserve-view=true&view=aspnetcore-8.0#cache-storage). 
 * It uses semantic caching to cache responses from similar prompts using the [Redis OM for .NET](https://github.com/redis/redis-om-dotnet)
 
+## Deploy the application in Azure
+
+Prerequisites:
+- Azure subscription. [Start free](https://azure.microsoft.com/free)
+- .NET 9. [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
+- Docker. [Get docker](https://docs.docker.com/get-docker/)
+- Azure Developer CLI. [Install](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-windows)
+
+`
+NOTE: deploy this demo in the East US region to ensure both zonal support and Dall-E model available. DALL-E model for picture generation is only supported among East US, Australia East, or Sweden Central. Azure Cache for Redis needs a region with zonal support to work.
+`
+
+1. Open a command prompt
+1. Change directory to the project folder where azure.yaml file is located
+1. Make sure docker is running
+1. Run:
+    ```
+    azd up
+    ```
+1. Follow command prompt to enter environment name and select subscription
+1. This will create all the resources needed to run the sample:
+- Azure Container App instance and environment
+- Azure Container Registry
+- Azure Open AI service
+- Azure Cache for Redis Enterprise
+- Azure Key Vault
+
+
+
+## Explore the application features
+
 To experiment with the demo:
 1. call the /nocache/ endpoint with your command prompt. Refresh the browser. Observe that refresh takes a noticeable delay and a new picture will be generated.
-2. call the /cached/ endpoint with your command prompt. Refresh the browser. Observe that the output picture does not change and refresh finishes instantly. 
-3. call the /semanticcache/ endpoint with your command prompt. Enter two similar prompts such as "a french garden in monet style" and "a monet style french garden". Observe that the outputs are cached. 
+1. call the /cached/ endpoint with your command prompt. Refresh the browser. Observe that the output picture does not change and refresh finishes instantly. 
+1. call the /semanticcache/ endpoint with your command prompt. Enter two similar prompts such as "a french garden in monet style" and "a monet style french garden". Observe that the outputs are cached. 
 
 Here are an example outputs:
 
@@ -24,34 +55,9 @@ Here are an example outputs:
 
 ![semantic cache: a monet style french garden](./images/sc_a-monet-style-french-garden.png)
 
-## Run the application in Azure
+## Clean up Azure resources
 
-Prerequisites:
-- Azure subscription. [Start free](https://azure.microsoft.com/free)
-- .NET 8 or above. [Download](https://dotnet.microsoft.com/download/dotnet/8.0)
-- Docker. [Get docker](https://docs.docker.com/get-docker/)
-- Azure Developer CLI. [Install](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-windows)
-
-`
-NOTE: deploy this demo in the East US region to ensure both zonal support and Dall-E model available. DALL-E model for picture generation is only supported among East US, Australia East, or Sweden Central. Azure Cache for Redis needs a region with zonal support to work.
-`
-
-1. Open a command prompt
-2. Change directory to the project folder where azure.yaml file is located
-4. Make sure docker is running
-5. Run:
-    ```
-    azd up
-    ```
-6. Follow command prompt to enter environment name and select subscription
-7. This will create all the resources needed to run the sample:
-- Azure Container App instance and environment
-- Azure Container Registry
-- Azure Open AI service
-- Azure Cache for Redis Enterprise
-- Azure Key Vault
-
-8. To clean up the environment, run 
+1. To clean up the environment, run 
     ```
     azd down
     ```
