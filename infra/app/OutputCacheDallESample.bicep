@@ -10,9 +10,30 @@ param openAiSku object = {
   name:'S0'
 }
 
-var embeddingModelName = 'text-embedding-ada-002'
 var embeddingDeploymentCapacity = 30
 var redisPort = 10000
+
+var openai_deployments = [
+
+  {
+    name: 'text-embedding-ada-002'
+	  model_name: '${name}-textembedding'
+    version: '2'
+    raiPolicyName: 'Microsoft.Default'
+    sku_capacity: embeddingDeploymentCapacity
+    sku_name: 'Standard'
+  }
+
+  {
+    name: 'dall-e-3'
+	  model_name: 'dall-e-3'
+    version: '3.0'
+    raiPolicyName: 'Microsoft.Default'
+    sku_capacity: 1
+    sku_name: 'Standard'
+  }
+
+]
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -104,7 +125,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'AOAIEmbeddingDeploymentName'
-              value: textembeddingdeployment.name
+              value: '${name}-textembedding'
             }
             {
               name: 'apiUrl'
@@ -142,26 +163,30 @@ resource cognitiveAccount 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   properties: {
     customSubDomainName: '${name}-csaccount'
     publicNetworkAccess: 'Enabled'
+    apiProperties: {
+      enableDallE: true
+    }
   }
   sku: openAiSku
 }
 
-//ada text embedding service
-resource textembeddingdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
-  name:'${name}-textembedding'
+@batchSize(1)
+resource model 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = [for deployment in openai_deployments: {
+  name: deployment.model_name
   parent: cognitiveAccount
-  properties:{
+  sku: {
+	name: deployment.sku_name
+	capacity: deployment.sku_capacity
+  }
+  properties: {
     model: {
       format: 'OpenAI'
-      name: embeddingModelName
-      version: '2'
+      name: deployment.name
+      version: deployment.version
     }
+    raiPolicyName: deployment.raiPolicyName
   }
-  sku: {
-    name: 'Standard'
-    capacity: embeddingDeploymentCapacity
-  }
-}
+}]
 
 //azure cache for redis resource
 resource redisCache 'Microsoft.Cache/redisEnterprise@2024-02-01' = {
